@@ -176,16 +176,16 @@ class _MessageListViewState extends State<MessageListView> {
                     return Align(
                       child: Column(
                         children: <Widget>[
-//                          if (showDate &&
-//                              (!widget.inverted ||
-//                                  widget.messages.length == 1 ||
-//                                  (last && widget.inverted)))
-//                            DateBuilder(
-//                              date:
-//                                  widget.inverted ? previousDate : currentDate,
-//                              customDateBuilder: widget.dateBuilder,
-//                              dateFormat: widget.dateFormat,
-//                            ),
+                          if (showDate &&
+                              (!widget.inverted ||
+                                  widget.messages.length == 1 ||
+                                  (last && widget.inverted)))
+                            DateBuilder(
+                              date:
+                                  widget.inverted ? previousDate : currentDate,
+                              customDateBuilder: widget.dateBuilder,
+                              dateFormat: widget.dateFormat,
+                            ),
                           Padding(
                             padding: EdgeInsets.only(
                               top: first ? 10.0 : 0.0,
