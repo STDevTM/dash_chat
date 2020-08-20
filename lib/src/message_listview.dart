@@ -176,27 +176,24 @@ class _MessageListViewState extends State<MessageListView> {
                     return Align(
                       child: Column(
                         children: <Widget>[
-                          if (showDate &&
-                              (!widget.inverted ||
-                                  widget.messages.length == 1 ||
-                                  (last && widget.inverted)))
-                            DateBuilder(
-                              date:
-                                  widget.inverted ? previousDate : currentDate,
-                              customDateBuilder: widget.dateBuilder,
-                              dateFormat: widget.dateFormat,
-                            ),
+//                          if (showDate &&
+//                              (!widget.inverted ||
+//                                  widget.messages.length == 1 ||
+//                                  (last && widget.inverted)))
+//                            DateBuilder(
+//                              date:
+//                                  widget.inverted ? previousDate : currentDate,
+//                              customDateBuilder: widget.dateBuilder,
+//                              dateFormat: widget.dateFormat,
+//                            ),
                           Padding(
                             padding: EdgeInsets.only(
                               top: first ? 10.0 : 0.0,
                               bottom: last ? 10.0 : 0.0,
                             ),
                             child: Row(
-                              mainAxisAlignment:
-                                  widget.messages[i].user.uid == widget.user.uid
-                                      ? MainAxisAlignment.end
-                                      : MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Padding(
                                   padding: EdgeInsets.symmetric(
@@ -204,9 +201,7 @@ class _MessageListViewState extends State<MessageListView> {
                                   ),
                                   child: Opacity(
                                     opacity: (widget.showAvatarForEverMessage ||
-                                                showAvatar) &&
-                                            widget.messages[i].user.uid !=
-                                                widget.user.uid
+                                                showAvatar)
                                         ? 1
                                         : 0,
                                     child: AvatarContainer(
@@ -257,18 +252,12 @@ class _MessageListViewState extends State<MessageListView> {
                                         ? widget
                                             .messageBuilder(widget.messages[i])
                                         : Align(
-                                            alignment:
-                                                widget.messages[i].user.uid ==
-                                                        widget.user.uid
-                                                    ? AlignmentDirectional.centerEnd
-                                                    : AlignmentDirectional.centerStart,
+                                            alignment: AlignmentDirectional.centerStart,
                                             child: MessageContainer(
                                               messagePadding:
                                                   widget.messagePadding,
                                               constraints: constraints,
-                                              isUser:
-                                                  widget.messages[i].user.uid ==
-                                                      widget.user.uid,
+                                              isUser: false,
                                               message: widget.messages[i],
                                               timeFormat: widget.timeFormat,
                                               messageImageBuilder:
