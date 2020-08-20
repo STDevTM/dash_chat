@@ -120,7 +120,7 @@ class DashChat extends StatefulWidget {
   /// messageBuilder will override the the default chat container which uses
   /// and you will need to build complete message Widget it will not accept
   /// and include any other builder functions.
-  final Widget Function(ChatMessage) messageBuilder;
+  final Widget Function(ChatMessage, bool) messageBuilder;
 
   /// messageTextBuilder will override the the default message text.
   final Widget Function(String, [ChatMessage]) messageTextBuilder;
