@@ -13,7 +13,7 @@ class MessageListView extends StatefulWidget {
   final Function(ChatMessage) onLongPressMessage;
   final bool inverted;
   final Widget Function(ChatUser) avatarBuilder;
-  final Widget Function(ChatMessage) messageBuilder;
+  final Widget Function(ChatMessage, {bool shouldShowAvatar}) messageBuilder;
   final Widget Function(String, [ChatMessage]) messageTextBuilder;
   final Widget Function(String, [ChatMessage]) messageImageBuilder;
   final Widget Function(String, [ChatMessage]) messageTimeBuilder;
@@ -250,7 +250,7 @@ class _MessageListViewState extends State<MessageListView> {
                                     },
                                     child: widget.messageBuilder != null
                                         ? widget
-                                            .messageBuilder(widget.messages[i])
+                                            .messageBuilder(widget.messages[i], shouldShowAvatar: showAvatar)
                                         : Align(
                                             alignment: AlignmentDirectional.centerStart,
                                             child: MessageContainer(
