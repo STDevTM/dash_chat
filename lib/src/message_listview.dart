@@ -113,6 +113,8 @@ class _MessageListViewState extends State<MessageListView> {
     return true;
   }
 
+  Map<int, String> dates = {};
+
   @override
   Widget build(BuildContext context) {
     DateTime currentDate;
@@ -141,7 +143,9 @@ class _MessageListViewState extends State<MessageListView> {
                     bool showAvatar = shouldShowAvatar(i);
                     bool first = false;
                     bool last = false;
-                    bool showDate;
+                    bool showDate = false;
+
+                    final m = widget.messages[i];
 
                     if (widget.messages.length == 0) {
                       first = true;
@@ -149,43 +153,59 @@ class _MessageListViewState extends State<MessageListView> {
                       last = true;
                     }
 
-                    DateTime messageDate = DateTime(
-                      widget.messages[i].createdAt.year,
-                      widget.messages[i].createdAt.month,
-                      widget.messages[i].createdAt.day,
-                    );
+                    DateTime messageDate = m.createdAt;
 
                     // Needed for inverted list
-                    DateTime previousDate = currentDate ?? messageDate;
+//                    DateTime previousDate = currentDate ?? messageDate;
 
-                    if (currentDate == null) {
-                      currentDate = messageDate;
-                      showDate =
-                          !widget.inverted || widget.messages.length == 1;
-                    } else if (currentDate.difference(messageDate).inDays !=
-                        0) {
-                      showDate = true;
-                      currentDate = messageDate;
-                    } else if (i == widget.messages.length - 1 &&
-                        widget.inverted) {
-                      showDate = true;
+                    // This is a quick fix for separator bug
+                    // not adopted for inverted case
+                    if (dates[messageDate.day] != null) {
+                      if (dates[messageDate.day] == m.id) {
+                        currentDate = messageDate;
+                        showDate = true;
+                      }
                     } else {
-                      showDate = false;
+                      dates[messageDate.day] = m.id;
+                      currentDate = messageDate;
+                      showDate = true;
                     }
+
+//                    if (currentDate == null) {
+//                      currentDate = messageDate;
+//                      showDate =
+//                          !widget.inverted || widget.messages.length == 1;
+//                    } else if (currentDate.difference(messageDate).inDays !=
+//                        0) {
+//                      showDate = true;
+//                      currentDate = messageDate;
+//                    } else if (i == widget.messages.length - 1 &&
+//                        widget.inverted) {
+//                      showDate = true;
+//                    } else {
+//                      showDate = false;
+//                    }
+
+                    Widget dateWidget = DateBuilder(
+                      date: currentDate,
+                      customDateBuilder: widget.dateBuilder,
+                      dateFormat: widget.dateFormat,
+                    );
 
                     return Align(
                       child: Column(
                         children: <Widget>[
-                          if (showDate &&
-                              (!widget.inverted ||
-                                  widget.messages.length == 1 ||
-                                  (last && widget.inverted)))
-                            DateBuilder(
-                              date:
-                                  widget.inverted ? previousDate : currentDate,
-                              customDateBuilder: widget.dateBuilder,
-                              dateFormat: widget.dateFormat,
-                            ),
+//                          if (showDate &&
+//                              (!widget.inverted ||
+//                                  widget.messages.length == 1 ||
+//                                  (last && widget.inverted)))
+//                            DateBuilder(
+//                              date: currentDate,
+//                              customDateBuilder: widget.dateBuilder,
+//                              dateFormat: widget.dateFormat,
+//                            ),
+                        if (showDate && !widget.inverted)
+                          dateWidget,
                           Padding(
                             padding: EdgeInsets.only(
                               top: first ? 10.0 : 0.0,
@@ -311,16 +331,18 @@ class _MessageListViewState extends State<MessageListView> {
                               ],
                             ),
                           ),
-                          if (showDate &&
-                              widget.inverted &&
-                              widget.messages.length > 1 &&
-                              !last)
-                            DateBuilder(
-                              date:
-                                  widget.inverted ? previousDate : currentDate,
-                              customDateBuilder: widget.dateBuilder,
-                              dateFormat: widget.dateFormat,
-                            ),
+//                          if (showDate &&
+//                              widget.inverted &&
+//                              widget.messages.length > 1 &&
+//                              !last)
+//                            DateBuilder(
+//                              date:
+//                                  widget.inverted ? previousDate : currentDate,
+//                              customDateBuilder: widget.dateBuilder,
+//                              dateFormat: widget.dateFormat,
+//                            ),
+                        if (showDate && widget.inverted)
+                          dateWidget
                         ],
                       ),
                     );
