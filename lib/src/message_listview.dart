@@ -119,6 +119,13 @@ class _MessageListViewState extends State<MessageListView> {
   Widget build(BuildContext context) {
     DateTime currentDate;
 
+    dates = {};
+    widget.messages.forEach((m) {
+      if (dates[m.createdAt.day] == null) {
+        dates[m.createdAt.day] = m.id;
+      }
+    });
+
     final constraints = widget.constraints ??
         BoxConstraints(
             maxHeight: MediaQuery.of(context).size.height,
@@ -164,11 +171,8 @@ class _MessageListViewState extends State<MessageListView> {
                       if (dates[messageDate.day] == m.id) {
                         currentDate = messageDate;
                         showDate = true;
+                        print("Show");
                       }
-                    } else {
-                      dates[messageDate.day] = m.id;
-                      currentDate = messageDate;
-                      showDate = true;
                     }
 
 //                    if (currentDate == null) {
