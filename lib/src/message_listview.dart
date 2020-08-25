@@ -171,7 +171,6 @@ class _MessageListViewState extends State<MessageListView> {
                       if (dates[messageDate.day] == m.id) {
                         currentDate = messageDate;
                         showDate = true;
-                        print("Show");
                       }
                     }
 
