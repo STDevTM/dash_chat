@@ -135,7 +135,7 @@ class ChatInputToolbar extends StatelessWidget {
               if (sendButtonBuilder != null)
                 sendButtonBuilder(() async {
                   if (text.length != 0) {
-                    await onSend(message);
+                    _sendMessage(context, message);
 
                     controller.text = "";
 
