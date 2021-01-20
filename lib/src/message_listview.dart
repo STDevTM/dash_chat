@@ -153,6 +153,9 @@ class _MessageListViewState extends State<MessageListView> {
                     bool showDate = false;
 
                     final m = widget.messages[i];
+                    bool isCurrentUser = m.user.uid == widget.user.uid;
+
+                    print('something $isCurrentUser');
 
                     if (widget.messages.length == 0) {
                       first = true;
@@ -218,24 +221,28 @@ class _MessageListViewState extends State<MessageListView> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: constraints.maxWidth * 0.02,
-                                  ),
-                                  child: Opacity(
-                                    opacity: (widget.showAvatarForEverMessage ||
-                                                showAvatar)
-                                        ? 1
-                                        : 0,
-                                    child: AvatarContainer(
-                                      user: widget.messages[i].user,
-                                      onPress: widget.onPressAvatar,
-                                      onLongPress: widget.onLongPressAvatar,
-                                      avatarBuilder: widget.avatarBuilder,
-                                      avatarMaxSize: widget.avatarMaxSize,
+                                if (!isCurrentUser)
+                                  Spacer(),
+
+                                if(isCurrentUser)
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: constraints.maxWidth * 0.02,
+                                    ),
+                                    child: Opacity(
+                                      opacity: (widget.showAvatarForEverMessage ||
+                                          showAvatar)
+                                          ? 1
+                                          : 0,
+                                      child: AvatarContainer(
+                                        user: widget.messages[i].user,
+                                        onPress: widget.onPressAvatar,
+                                        onLongPress: widget.onLongPressAvatar,
+                                        avatarBuilder: widget.avatarBuilder,
+                                        avatarMaxSize: widget.avatarMaxSize,
+                                      ),
                                     ),
                                   ),
-                                ),
                                 Expanded(
                                   child: GestureDetector(
                                     onLongPress: () {
@@ -275,7 +282,7 @@ class _MessageListViewState extends State<MessageListView> {
                                         ? widget
                                             .messageBuilder(widget.messages[i], showAvatar)
                                         : Align(
-                                            alignment: AlignmentDirectional.centerStart,
+                                            alignment: isCurrentUser ? AlignmentDirectional.centerStart : AlignmentDirectional.centerEnd,
                                             child: MessageContainer(
                                               messagePadding:
                                                   widget.messagePadding,
@@ -305,6 +312,25 @@ class _MessageListViewState extends State<MessageListView> {
                                           ),
                                   ),
                                 ),
+                                if (!isCurrentUser)
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: constraints.maxWidth * 0.02,
+                                    ),
+                                    child: Opacity(
+                                      opacity: (widget.showAvatarForEverMessage ||
+                                          showAvatar)
+                                          ? 1
+                                          : 0,
+                                      child: AvatarContainer(
+                                        user: widget.messages[i].user,
+                                        onPress: widget.onPressAvatar,
+                                        onLongPress: widget.onLongPressAvatar,
+                                        avatarBuilder: widget.avatarBuilder,
+                                        avatarMaxSize: widget.avatarMaxSize,
+                                      ),
+                                    ),
+                                  ),
                                 if (widget.showuserAvatar)
                                   Padding(
                                     padding: EdgeInsets.symmetric(
