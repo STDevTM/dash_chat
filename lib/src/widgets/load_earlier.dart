@@ -2,20 +2,24 @@ part of dash_chat;
 
 class LoadEarlierWidget extends StatelessWidget {
   const LoadEarlierWidget({
-    Key? key,
-    this.onLoadEarlier,
-    required this.defaultLoadCallback,
+    Key key,
+    @required this.onLoadEarlier,
+    @required this.defaultLoadCallback,
   }) : super(key: key);
 
-  final Function? onLoadEarlier;
+  final Function onLoadEarlier;
   final Function(bool) defaultLoadCallback;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        onLoadEarlier?.call();
-        defaultLoadCallback(false);
+        if (onLoadEarlier != null) {
+          onLoadEarlier();
+          defaultLoadCallback(false);
+        } else {
+          defaultLoadCallback(false);
+        }
       },
       child: Container(
         padding: EdgeInsets.symmetric(

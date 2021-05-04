@@ -24,7 +24,6 @@
 **/doc/api/
 .dart_tool/
 .flutter-plugins
-.flutter-plugins-dependencies
 .packages
 .pub-cache/
 .pub/
@@ -59,8 +58,6 @@
 **/ios/Flutter/App.framework
 **/ios/Flutter/Flutter.framework
 **/ios/Flutter/Generated.xcconfig
-**/ios/Flutter/Flutter.podspec
-**/ios/Flutter/flutter_export_environment.sh
 **/ios/Flutter/app.flx
 **/ios/Flutter/app.zip
 **/ios/Flutter/flutter_assets/
