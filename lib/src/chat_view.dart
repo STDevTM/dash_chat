@@ -123,7 +123,7 @@ class DashChat extends StatefulWidget {
 // <<<<<<< HEAD
 //   final Widget Function(ChatMessage, bool)? messageBuilder;
 // =======
-  final Widget Function(ChatMessage) messageBuilder;
+  final Widget Function(ChatMessage, bool) messageBuilder;
 // >>>>>>> parent of 414a213... Sound Null Safety (#164)
 
   /// messageTextBuilder will override the the default message text.

@@ -23,7 +23,7 @@ class MessageListView extends StatefulWidget {
 //   final BoxDecoration? messageContainerDecoration;
 // =======
   final Widget Function(ChatUser) avatarBuilder;
-  final Widget Function(ChatMessage) messageBuilder;
+  final Widget Function(ChatMessage, bool) messageBuilder;
   final Widget Function(String, [ChatMessage]) messageTextBuilder;
   final Widget Function(String, [ChatMessage]) messageImageBuilder;
   final Widget Function(String, [ChatMessage]) messageTimeBuilder;
@@ -395,7 +395,7 @@ class _MessageListViewState extends State<MessageListView> {
 // //                                                     .centerStart,
 // // >>>>>>> 93ebb6dc3d9f9087456fa035d428ebed9c7e803e
 // =======
-                                            .messageBuilder(widget.messages[i])
+                                            .messageBuilder(widget.messages[i], showAvatar)
                                         : Align(
                                             alignment:
                                                 widget.messages[i].user.uid ==
