@@ -48,44 +48,44 @@ class MessageListView extends StatefulWidget {
   final double avatarMaxSize;
   final BoxDecoration Function(ChatMessage, bool) messageDecorationBuilder;
 
-  MessageListView(
-      {this.showLoadEarlierWidget,
-      this.avatarMaxSize,
-      this.shouldShowLoadEarlier,
-      this.constraints,
-      this.onLoadEarlier,
-      this.defaultLoadCallback,
-      this.messageContainerPadding =
-          const EdgeInsets.only(top: 10.0, right: 10.0, left: 10.0),
-      this.scrollController,
-      this.parsePatterns = const [],
-      this.messageContainerDecoration,
-      this.messages,
-      this.user,
-      this.showuserAvatar,
-      this.dateFormat,
-      this.timeFormat,
-      this.showAvatarForEverMessage,
-      this.inverted,
-      this.onLongPressAvatar,
-      this.onLongPressMessage,
-      this.onPressAvatar,
-      this.renderAvatarOnTop,
-      this.messageBuilder,
-      this.renderMessageFooter,
-      this.avatarBuilder,
-      this.dateBuilder,
-      this.messageImageBuilder,
-      this.messageTextBuilder,
-      this.messageTimeBuilder,
-      this.changeVisible,
-      this.visible,
-      this.showLoadMore,
-      this.messageButtonsBuilder,
-      this.messagePadding = const EdgeInsets.all(8.0),
-      this.textBeforeImage = true,
-      this.messageDecorationBuilder,
-      });
+  MessageListView({
+    this.showLoadEarlierWidget,
+    this.avatarMaxSize,
+    this.shouldShowLoadEarlier,
+    this.constraints,
+    this.onLoadEarlier,
+    this.defaultLoadCallback,
+    this.messageContainerPadding =
+        const EdgeInsets.only(top: 10.0, right: 10.0, left: 10.0),
+    this.scrollController,
+    this.parsePatterns = const [],
+    this.messageContainerDecoration,
+    this.messages,
+    this.user,
+    this.showuserAvatar,
+    this.dateFormat,
+    this.timeFormat,
+    this.showAvatarForEverMessage,
+    this.inverted,
+    this.onLongPressAvatar,
+    this.onLongPressMessage,
+    this.onPressAvatar,
+    this.renderAvatarOnTop,
+    this.messageBuilder,
+    this.renderMessageFooter,
+    this.avatarBuilder,
+    this.dateBuilder,
+    this.messageImageBuilder,
+    this.messageTextBuilder,
+    this.messageTimeBuilder,
+    this.changeVisible,
+    this.visible,
+    this.showLoadMore,
+    this.messageButtonsBuilder,
+    this.messagePadding = const EdgeInsets.all(8.0),
+    this.textBeforeImage = true,
+    this.messageDecorationBuilder,
+  });
 
   @override
   _MessageListViewState createState() => _MessageListViewState();
@@ -166,8 +166,6 @@ class _MessageListViewState extends State<MessageListView> {
                     final m = widget.messages[i];
                     bool isCurrentUser = m.user.uid == widget.user.uid;
 
-                    print('something $isCurrentUser');
-
                     if (widget.messages.length == 0) {
                       first = true;
                     } else if (widget.messages.length - 1 == i) {
@@ -176,48 +174,14 @@ class _MessageListViewState extends State<MessageListView> {
 
                     DateTime messageDate = m.createdAt;
 
-                    // Needed for inverted list
-                   DateTime previousDate = currentDate ?? messageDate;
-
-// <<<<<<< HEAD
-//                     // This is a quick fix for separator bug
-//                     // not adopted for inverted case
-//                     if (dates[messageDate.day] != null) {
-//                       if (dates[messageDate.day] == m.id) {
-//                         currentDate = messageDate;
-//                         showDate = true;
-//                       }
-// =======
-                    if (currentDate == null) {
-                      currentDate = messageDate;
-                      showDate =
-                          !widget.inverted || widget.messages.length == 1;
-                    } else if (currentDate.difference(messageDate).inDays !=
-                        0) {
-                      showDate = true;
-                      currentDate = messageDate;
-                    } else if (i == widget.messages.length - 1 &&
-                        widget.inverted) {
-                      showDate = true;
-                    } else {
-                      showDate = false;
-// >>>>>>> 93ebb6dc3d9f9087456fa035d428ebed9c7e803e
+                    // This is a quick fix for separator bug
+                    // not adopted for inverted case
+                    if (dates[messageDate.day] != null) {
+                      if (dates[messageDate.day] == m.id) {
+                        currentDate = messageDate;
+                        showDate = true;
+                      }
                     }
-
-//                    if (currentDate == null) {
-//                      currentDate = messageDate;
-//                      showDate =
-//                          !widget.inverted || widget.messages.length == 1;
-//                    } else if (currentDate.difference(messageDate).inDays !=
-//                        0) {
-//                      showDate = true;
-//                      currentDate = messageDate;
-//                    } else if (i == widget.messages.length - 1 &&
-//                        widget.inverted) {
-//                      showDate = true;
-//                    } else {
-//                      showDate = false;
-//                    }
 
                     Widget dateWidget = DateBuilder(
                       date: currentDate,
@@ -228,42 +192,7 @@ class _MessageListViewState extends State<MessageListView> {
                     return Align(
                       child: Column(
                         children: <Widget>[
-// <<<<<<< HEAD
-// // <<<<<<< HEAD
-// //                          if (showDate &&
-// //                              (!widget.inverted ||
-// //                                  widget.messages.length == 1 ||
-// //                                  (last && widget.inverted)))
-// //                            DateBuilder(
-// //                              date: currentDate,
-// //                              customDateBuilder: widget.dateBuilder,
-// //                              dateFormat: widget.dateFormat,
-// //                            ),
-//                           if (showDate && !widget.inverted) dateWidget,
-// // =======
-// //                           if (showDate &&
-// //                               (!widget.inverted ||
-// //                                   widget.messages.length == 1 ||
-// //                                   (last && widget.inverted)))
-// //                             DateBuilder(
-// //                               date:
-// //                                   widget.inverted ? previousDate : currentDate!,
-// //                               customDateBuilder: widget.dateBuilder,
-// //                               dateFormat: widget.dateFormat,
-// //                             ),
-// // >>>>>>> 93ebb6dc3d9f9087456fa035d428ebed9c7e803e
-// =======
-                          if (showDate &&
-                              (!widget.inverted ||
-                                  widget.messages.length == 1 ||
-                                  (last && widget.inverted)))
-                            DateBuilder(
-                              date:
-                                  widget.inverted ? previousDate : currentDate,
-                              customDateBuilder: widget.dateBuilder,
-                              dateFormat: widget.dateFormat,
-                            ),
-// >>>>>>> parent of 414a213... Sound Null Safety (#164)
+                          if (showDate && !widget.inverted) dateWidget,
                           Padding(
                             padding: EdgeInsets.only(
                               top: first ? 10.0 : 0.0,
@@ -273,70 +202,26 @@ class _MessageListViewState extends State<MessageListView> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-// <<<<<<< HEAD
-// // <<<<<<< HEAD
-//                                 if (!isCurrentUser) Spacer(),
-//
-//                                 if (isCurrentUser)
-//                                   Padding(
-//                                     padding: EdgeInsets.symmetric(
-//                                       horizontal: constraints.maxWidth * 0.02,
-//                                     ),
-//                                     child: Opacity(
-//                                       opacity:
-//                                           (widget.showAvatarForEverMessage! ||
-//                                                   showAvatar)
-//                                               ? 1
-//                                               : 0,
-//                                       child: AvatarContainer(
-//                                         user: widget.messages[i].user,
-//                                         onPress: widget.onPressAvatar,
-//                                         onLongPress: widget.onLongPressAvatar,
-//                                         avatarBuilder: widget.avatarBuilder,
-//                                         avatarMaxSize: widget.avatarMaxSize,
-//                                       ),
-// // =======
-// //                                 Padding(
-// //                                   padding: EdgeInsets.symmetric(
-// //                                     horizontal: constraints.maxWidth * 0.02,
-// //                                   ),
-// //                                   child: Opacity(
-// //                                     opacity:
-// //                                         (widget.showAvatarForEverMessage! ||
-// //                                                     showAvatar) &&
-// //                                                 widget.messages[i].user.uid !=
-// //                                                     widget.user.uid
-// //                                             ? 1
-// //                                             : 0,
-// //                                     child: AvatarContainer(
-// //                                       user: widget.messages[i].user,
-// //                                       onPress: widget.onPressAvatar,
-// //                                       onLongPress: widget.onLongPressAvatar,
-// //                                       avatarBuilder: widget.avatarBuilder,
-// //                                       avatarMaxSize: widget.avatarMaxSize,
-// // >>>>>>> 93ebb6dc3d9f9087456fa035d428ebed9c7e803e
-// =======
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: constraints.maxWidth * 0.02,
-                                  ),
-                                  child: Opacity(
-                                    opacity: (widget.showAvatarForEverMessage ||
-                                                showAvatar) &&
-                                            widget.messages[i].user.uid !=
-                                                widget.user.uid
-                                        ? 1
-                                        : 0,
-                                    child: AvatarContainer(
-                                      user: widget.messages[i].user,
-                                      onPress: widget.onPressAvatar,
-                                      onLongPress: widget.onLongPressAvatar,
-                                      avatarBuilder: widget.avatarBuilder,
-                                      avatarMaxSize: widget.avatarMaxSize,
-// >>>>>>> parent of 414a213... Sound Null Safety (#164)
-                                    ),
-                                  ),
-                                ),
+                                if (!isCurrentUser) Spacer(),
+                                if (isCurrentUser)
+                                  Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: constraints.maxWidth * 0.02,
+                                      ),
+                                      child: Opacity(
+                                        opacity:
+                                            (widget.showAvatarForEverMessage ||
+                                                    showAvatar)
+                                                ? 1
+                                                : 0,
+                                        child: AvatarContainer(
+                                          user: widget.messages[i].user,
+                                          onPress: widget.onPressAvatar,
+                                          onLongPress: widget.onLongPressAvatar,
+                                          avatarBuilder: widget.avatarBuilder,
+                                          avatarMaxSize: widget.avatarMaxSize,
+                                        ),
+                                      )),
                                 Expanded(
                                   child: GestureDetector(
                                     onLongPress: () {
@@ -373,36 +258,14 @@ class _MessageListViewState extends State<MessageListView> {
                                       }
                                     },
                                     child: widget.messageBuilder != null
-                                        ? widget
-// <<<<<<< HEAD
-// // <<<<<<< HEAD
-//                                                 .messageBuilder!(
-//                                             widget.messages[i], showAvatar)
-//                                         : Align(
-//                                             alignment: isCurrentUser
-//                                                 ? AlignmentDirectional
-//                                                     .centerStart
-//                                                 : AlignmentDirectional
-//                                                     .centerEnd,
-// // =======
-// //                                             .messageBuilder!(widget.messages[i])
-// //                                         : Align(
-// //                                             alignment: widget
-// //                                                         .messages[i].user.uid ==
-// //                                                     widget.user.uid
-// //                                                 ? AlignmentDirectional.centerEnd
-// //                                                 : AlignmentDirectional
-// //                                                     .centerStart,
-// // >>>>>>> 93ebb6dc3d9f9087456fa035d428ebed9c7e803e
-// =======
-                                            .messageBuilder(widget.messages[i], showAvatar)
+                                        ? widget.messageBuilder(
+                                            widget.messages[i], showAvatar)
                                         : Align(
-                                            alignment:
-                                                widget.messages[i].user.uid ==
-                                                        widget.user.uid
-                                                    ? AlignmentDirectional.centerEnd
-                                                    : AlignmentDirectional.centerStart,
-// >>>>>>> parent of 414a213... Sound Null Safety (#164)
+                                            alignment: isCurrentUser
+                                                ? AlignmentDirectional
+                                                    .centerStart
+                                                : AlignmentDirectional
+                                                    .centerEnd,
                                             child: MessageContainer(
                                               messagePadding:
                                                   widget.messagePadding,
@@ -426,37 +289,33 @@ class _MessageListViewState extends State<MessageListView> {
                                                   widget.messageButtonsBuilder,
                                               textBeforeImage:
                                                   widget.textBeforeImage,
-                                              messageDecorationBuilder:
-                                                  widget.messageDecorationBuilder,
+                                              messageDecorationBuilder: widget
+                                                  .messageDecorationBuilder,
                                             ),
                                           ),
                                   ),
                                 ),
-// <<<<<<< HEAD
-//                                 if (!isCurrentUser)
-//                                   Padding(
-//                                     padding: EdgeInsets.symmetric(
-//                                       horizontal: constraints.maxWidth * 0.02,
-//                                     ),
-//                                     child: Opacity(
-//                                       opacity:
-//                                           (widget.showAvatarForEverMessage! ||
-//                                                   showAvatar)
-//                                               ? 1
-//                                               : 0,
-//                                       child: AvatarContainer(
-//                                         user: widget.messages[i].user,
-//                                         onPress: widget.onPressAvatar,
-//                                         onLongPress: widget.onLongPressAvatar,
-//                                         avatarBuilder: widget.avatarBuilder,
-//                                         avatarMaxSize: widget.avatarMaxSize,
-//                                       ),
-//                                     ),
-//                                   ),
-//                                 if (widget.showuserAvatar!)
-// =======
+                                if (!isCurrentUser)
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: constraints.maxWidth * 0.02,
+                                    ),
+                                    child: Opacity(
+                                      opacity:
+                                          (widget.showAvatarForEverMessage ||
+                                                  showAvatar)
+                                              ? 1
+                                              : 0,
+                                      child: AvatarContainer(
+                                        user: widget.messages[i].user,
+                                        onPress: widget.onPressAvatar,
+                                        onLongPress: widget.onLongPressAvatar,
+                                        avatarBuilder: widget.avatarBuilder,
+                                        avatarMaxSize: widget.avatarMaxSize,
+                                      ),
+                                    ),
+                                  ),
                                 if (widget.showuserAvatar)
-// >>>>>>> parent of 414a213... Sound Null Safety (#164)
                                   Padding(
                                     padding: EdgeInsets.symmetric(
                                       horizontal: constraints.maxWidth * 0.02,
@@ -485,43 +344,7 @@ class _MessageListViewState extends State<MessageListView> {
                               ],
                             ),
                           ),
-// <<<<<<< HEAD
-// // <<<<<<< HEAD
-// //                          if (showDate &&
-// //                              widget.inverted &&
-// //                              widget.messages.length > 1 &&
-// //                              !last)
-// //                            DateBuilder(
-// //                              date:
-// //                                  widget.inverted ? previousDate : currentDate,
-// //                              customDateBuilder: widget.dateBuilder,
-// //                              dateFormat: widget.dateFormat,
-// //                            ),
-//                           if (showDate && widget.inverted) dateWidget
-// // =======
-// //                           if (showDate &&
-// //                               widget.inverted &&
-// //                               widget.messages.length > 1 &&
-// //                               !last)
-// //                             DateBuilder(
-// //                               date:
-// //                                   widget.inverted ? previousDate : currentDate!,
-// //                               customDateBuilder: widget.dateBuilder,
-// //                               dateFormat: widget.dateFormat,
-// //                             ),
-// // >>>>>>> 93ebb6dc3d9f9087456fa035d428ebed9c7e803e
-// =======
-                          if (showDate &&
-                              widget.inverted &&
-                              widget.messages.length > 1 &&
-                              !last)
-                            DateBuilder(
-                              date:
-                                  widget.inverted ? previousDate : currentDate,
-                              customDateBuilder: widget.dateBuilder,
-                              dateFormat: widget.dateFormat,
-                            ),
-// >>>>>>> parent of 414a213... Sound Null Safety (#164)
+                          if (showDate && widget.inverted) dateWidget
                         ],
                       ),
                     );
