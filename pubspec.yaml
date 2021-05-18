@@ -10,15 +10,15 @@ dependencies:
   flutter:
     sdk: flutter
 #<<<<<<< HEAD
-#  flutter_parsed_text: ^2.1.0
-#  uuid: ^3.0.4
-#  intl: ^0.17.0
-#  transparent_image: ^2.0.0
+  flutter_parsed_text: ^2.1.0
+  uuid: ^3.0.4
+  intl: ^0.17.0
+  transparent_image: ^2.0.0
 #=======
-  flutter_parsed_text: ^1.1.0
-  uuid: ^2.0.1
-  intl: ^0.16.0
-  transparent_image: ^1.0.0
+#  flutter_parsed_text: ^1.1.0
+#  uuid: ^2.0.1
+#  intl: ^0.16.0
+#  transparent_image: ^1.0.0
 #>>>>>>> parent of 414a213... Sound Null Safety (#164)
 
 dev_dependencies:
