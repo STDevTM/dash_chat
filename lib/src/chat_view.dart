@@ -384,23 +384,23 @@ class DashChatState extends State<DashChat> {
     if (visible) {
       changeVisible(false);
     }
-    setState(() {
-      this._text = text;
-    });
+    // setState(() {
+    //   this._text = text;
+    // });
   }
 
   void changeVisible(bool value) {
     if (widget.scrollToBottom) {
-      setState(() {
-        visible = value;
-      });
+      // setState(() {
+      //   visible = value;
+      // });
     }
   }
 
   void changeDefaultLoadMore(bool value) {
-    setState(() {
-      showLoadMore = value;
-    });
+    // setState(() {
+    //   showLoadMore = value;
+    // });
   }
 
   @override
@@ -409,6 +409,7 @@ class DashChatState extends State<DashChat> {
     textController = widget.textController ?? TextEditingController();
     inputFocusNode = widget.focusNode ?? FocusNode();
     WidgetsBinding.instance.addPostFrameCallback(widgetBuilt);
+
     super.initState();
   }
 
@@ -419,44 +420,53 @@ class DashChatState extends State<DashChat> {
   }
 
   void widgetBuilt(Duration d) {
-    double initPos = widget.inverted
-        ? 0.0
-        : scrollController.position.maxScrollExtent + 25.0;
 
-    scrollController
-        .animateTo(
-      initPos,
-      duration: const Duration(milliseconds: 150),
-      curve: Curves.easeInOut,
-    )
-        .whenComplete(() {
-      _timer = Timer(Duration(milliseconds: 1000), () {
-        if (this.mounted) {
-          setState(() {
-            _initialLoad = false;
-          });
-        }
-      });
+    // double initPos = widget.inverted
+    //     ? 0.0
+    //     : scrollController.position.maxScrollExtent + 25.0;
+    //
+    // scrollController
+    //     .animateTo(
+    //   initPos,
+    //   duration: const Duration(milliseconds: 150),
+    //   curve: Curves.easeInOut,
+    // )
+    //     .whenComplete(() {
+    //   _timer = Timer(Duration(milliseconds: 1000), () {
+    //     if (this.mounted) {
+    //       setState(() {
+    //         _initialLoad = false;
+    //       });
+    //     }
+    //   });
+    // });
+
+    _timer = Timer(Duration(milliseconds: 1000), () {
+      if (this.mounted) {
+        setState(() {
+          _initialLoad = false;
+        });
+      }
     });
 
     scrollController.addListener(() {
       bool topReached = widget.inverted
           ? scrollController.offset >=
-                  scrollController.position.maxScrollExtent &&
-              !scrollController.position.outOfRange
+          scrollController.position.maxScrollExtent &&
+          !scrollController.position.outOfRange
           : scrollController.offset <=
-                  scrollController.position.minScrollExtent &&
-              !scrollController.position.outOfRange;
+          scrollController.position.minScrollExtent &&
+          !scrollController.position.outOfRange;
 
       if (widget.shouldShowLoadEarlier) {
         if (topReached) {
-          setState(() {
-            showLoadMore = true;
-          });
+          // setState(() {
+          //   showLoadMore = true;
+          // });
         } else {
-          setState(() {
-            showLoadMore = false;
-          });
+          // setState(() {
+          //   showLoadMore = false;
+          // });
         }
       } else if (topReached) {
         widget.onLoadEarlier();
@@ -464,8 +474,28 @@ class DashChatState extends State<DashChat> {
     });
   }
 
+  asyncTaskTestAfterBuild() async {
+    if (scrollController.hasClients) {
+      Future.delayed(Duration(milliseconds: 100), () {
+        double initPos = widget.inverted
+            ? 0.0
+            : scrollController.position.maxScrollExtent + 25.0;
+
+        scrollController
+            .animateTo(
+          initPos,
+          duration: const Duration(milliseconds: 150),
+          curve: Curves.easeInOut,
+        );
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    asyncTaskTestAfterBuild();
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final maxWidth = constraints.maxWidth == double.infinity
@@ -485,41 +515,41 @@ class DashChatState extends State<DashChat> {
                     : MainAxisAlignment.end,
                 children: <Widget>[
                   MessageListView(
-                    avatarMaxSize: widget.avatarMaxSize,
-                    messagePadding: widget.messagePadding,
-                    constraints: constraints,
-                    shouldShowLoadEarlier: widget.shouldShowLoadEarlier,
-                    showLoadEarlierWidget: widget.showLoadEarlierWidget,
-                    onLoadEarlier: widget.onLoadEarlier,
-                    defaultLoadCallback: changeDefaultLoadMore,
-                    messageContainerPadding: widget.messageContainerPadding,
-                    scrollController: widget.scrollController != null
-                        ? widget.scrollController
-                        : scrollController,
-                    user: widget.user,
-                    messages: widget.messages,
-                    showuserAvatar: widget.showUserAvatar,
-                    dateFormat: widget.dateFormat,
-                    timeFormat: widget.timeFormat,
-                    inverted: widget.inverted,
-                    showAvatarForEverMessage: widget.showAvatarForEveryMessage,
-                    onLongPressAvatar: widget.onLongPressAvatar,
-                    onPressAvatar: widget.onPressAvatar,
-                    onLongPressMessage: widget.onLongPressMessage,
-                    avatarBuilder: widget.avatarBuilder,
-                    messageBuilder: widget.messageBuilder,
-                    messageTextBuilder: widget.messageTextBuilder,
-                    messageImageBuilder: widget.messageImageBuilder,
-                    messageTimeBuilder: widget.messageTimeBuilder,
-                    dateBuilder: widget.dateBuilder,
-                    messageContainerDecoration:
-                        widget.messageContainerDecoration,
-                    parsePatterns: widget.parsePatterns,
-                    changeVisible: changeVisible,
-                    visible: visible,
-                    showLoadMore: showLoadMore,
-                    messageButtonsBuilder: widget.messageButtonsBuilder,
-                    messageDecorationBuilder: widget.messageDecorationBuilder
+                      avatarMaxSize: widget.avatarMaxSize,
+                      messagePadding: widget.messagePadding,
+                      constraints: constraints,
+                      shouldShowLoadEarlier: widget.shouldShowLoadEarlier,
+                      showLoadEarlierWidget: widget.showLoadEarlierWidget,
+                      onLoadEarlier: widget.onLoadEarlier,
+                      defaultLoadCallback: changeDefaultLoadMore,
+                      messageContainerPadding: widget.messageContainerPadding,
+                      scrollController: widget.scrollController != null
+                          ? widget.scrollController
+                          : scrollController,
+                      user: widget.user,
+                      messages: widget.messages,
+                      showuserAvatar: widget.showUserAvatar,
+                      dateFormat: widget.dateFormat,
+                      timeFormat: widget.timeFormat,
+                      inverted: widget.inverted,
+                      showAvatarForEverMessage: widget.showAvatarForEveryMessage,
+                      onLongPressAvatar: widget.onLongPressAvatar,
+                      onPressAvatar: widget.onPressAvatar,
+                      onLongPressMessage: widget.onLongPressMessage,
+                      avatarBuilder: widget.avatarBuilder,
+                      messageBuilder: widget.messageBuilder,
+                      messageTextBuilder: widget.messageTextBuilder,
+                      messageImageBuilder: widget.messageImageBuilder,
+                      messageTimeBuilder: widget.messageTimeBuilder,
+                      dateBuilder: widget.dateBuilder,
+                      messageContainerDecoration:
+                      widget.messageContainerDecoration,
+                      parsePatterns: widget.parsePatterns,
+                      changeVisible: changeVisible,
+                      visible: visible,
+                      showLoadMore: showLoadMore,
+                      messageButtonsBuilder: widget.messageButtonsBuilder,
+                      messageDecorationBuilder: widget.messageDecorationBuilder
                   ),
                   if (widget.messages.length != 0 &&
                       widget.messages.last.user.uid != widget.user.uid &&
@@ -531,26 +561,26 @@ class DashChatState extends State<DashChat> {
                       width: widget.quickReplyScroll ? null : maxWidth,
                       child: widget.quickReplyScroll
                           ? ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: widget.messages.last.quickReplies.values
-                                  .map(_mapReply)
-                                  .toList(),
-                            )
+                        scrollDirection: Axis.horizontal,
+                        children: widget.messages.last.quickReplies.values
+                            .map(_mapReply)
+                            .toList(),
+                      )
                           : Wrap(
-                              children: <Widget>[
-                                ...widget.messages.last.quickReplies.values
-                                    .sublist(
-                                        0,
-                                        widget.messages.last.quickReplies.values
-                                                    .length <=
-                                                3
-                                            ? widget.messages.last.quickReplies
-                                                .values.length
-                                            : 3)
-                                    .map(_mapReply)
-                                    .toList(),
-                              ],
-                            ),
+                        children: <Widget>[
+                          ...widget.messages.last.quickReplies.values
+                              .sublist(
+                              0,
+                              widget.messages.last.quickReplies.values
+                                  .length <=
+                                  3
+                                  ? widget.messages.last.quickReplies
+                                  .values.length
+                                  : 3)
+                              .map(_mapReply)
+                              .toList(),
+                        ],
+                      ),
                     ),
                   if (widget.chatFooterBuilder != null)
                     widget.chatFooterBuilder(),
@@ -605,11 +635,11 @@ class DashChatState extends State<DashChat> {
                   child: widget.scrollToBottomWidget != null
                       ? widget.scrollToBottomWidget()
                       : ScrollToBottom(
-                          onScrollToBottomPress: widget.onScrollToBottomPress,
-                          scrollToBottomStyle: widget.scrollToBottomStyle,
-                          scrollController: scrollController,
-                          inverted: widget.inverted,
-                        ),
+                    onScrollToBottomPress: widget.onScrollToBottomPress,
+                    scrollToBottomStyle: widget.scrollToBottomStyle,
+                    scrollController: scrollController,
+                    inverted: widget.inverted,
+                  ),
                 ),
             ],
           ),
@@ -619,10 +649,10 @@ class DashChatState extends State<DashChat> {
   }
 
   QuickReply _mapReply(Reply reply) => QuickReply(
-        reply: reply,
-        onReply: widget.onQuickReply,
-        quickReplyBuilder: widget.quickReplyBuilder,
-        quickReplyStyle: widget.quickReplyStyle,
-        quickReplyTextStyle: widget.quickReplyTextStyle,
-      );
+    reply: reply,
+    onReply: widget.onQuickReply,
+    quickReplyBuilder: widget.quickReplyBuilder,
+    quickReplyStyle: widget.quickReplyStyle,
+    quickReplyTextStyle: widget.quickReplyTextStyle,
+  );
 }
