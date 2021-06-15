@@ -68,13 +68,6 @@ class ChatInputToolbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ChatMessage message = ChatMessage(
-      text: text,
-      user: user,
-      messageIdGenerator: messageIdGenerator,
-      createdAt: DateTime.now(),
-    );
-
     return Container(
       padding: inputToolbarPadding,
       margin: inputToolbarMargin,
@@ -96,11 +89,11 @@ class ChatInputToolbar extends StatelessWidget {
                     child: TextField(
                       focusNode: focusNode,
                       onChanged: (value) {
-                        onTextChange(value);
+                        // onTextChange(value);
                       },
                       onSubmitted: (value) {
                         if (sendOnEnter) {
-                          _sendMessage(context, message);
+                          _sendMessage(context);
                         }
                       },
                       textInputAction: textInputAction,
@@ -148,7 +141,14 @@ class ChatInputToolbar extends StatelessWidget {
 //                     controller!.text = "";
 // =======
                 sendButtonBuilder(() async {
-                  if (text.length != 0) {
+                  if (controller.text.length != 0) {
+                    ChatMessage message = ChatMessage(
+                      text: controller.text,
+                      user: user,
+                      messageIdGenerator: messageIdGenerator,
+                      createdAt: DateTime.now(),
+                    );
+
                     await onSend(message);
 
                     controller.text = "";
@@ -161,7 +161,7 @@ class ChatInputToolbar extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.send),
                   onPressed: alwaysShowSend || text.length != 0
-                      ? () => _sendMessage(context, message)
+                      ? () => _sendMessage(context)
                       : null,
                 ),
               if (!showTraillingBeforeSend) ...trailling,
@@ -173,8 +173,15 @@ class ChatInputToolbar extends StatelessWidget {
     );
   }
 
-  void _sendMessage(BuildContext context, ChatMessage message) async {
-    if (text.length != 0) {
+  void _sendMessage(BuildContext context) async {
+    if (controller.text.length != 0) {
+      ChatMessage message = ChatMessage(
+        text: controller.text,
+        user: user,
+        messageIdGenerator: messageIdGenerator,
+        createdAt: DateTime.now(),
+      );
+
       await onSend(message);
 
       controller.text = "";
@@ -182,14 +189,6 @@ class ChatInputToolbar extends StatelessWidget {
       onTextChange("");
 
       FocusScope.of(context).requestFocus(focusNode);
-
-      Timer(Duration(milliseconds: 150), () {
-        scrollController.animateTo(
-          reverse ? 0.0 : scrollController.position.maxScrollExtent + 30.0,
-          curve: Curves.easeOut,
-          duration: const Duration(milliseconds: 300),
-        );
-      });
     }
   }
 }
